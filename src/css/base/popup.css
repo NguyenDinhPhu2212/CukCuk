@@ -1,0 +1,72 @@
+.popup {
+    position: absolute;
+    top: 35%;
+    left: calc(50vw - 175px);
+    width: 350px;
+    height: auto;
+    border: 1px solid #bbbbbb;
+    border-radius: 6px;
+    font-size: 13px;
+    background-color: white;
+    z-index: 30;
+}
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+}
+.popup-title {
+    font-size: 16px;
+}
+.popup-title .title-content {
+    margin: 24px;
+    font-weight: bold;
+}
+.popup-header .x-btn {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-header .x-btn i {
+    color: #bbbbbb;
+    font-size: 24px;
+}
+.popup-header .x-btn:hover {
+    background-color: #e5e5e5;
+}
+.popup-content {
+    margin: 0 24px;
+    display: flex;
+}
+.popup-content .warning-icon {
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.popup-footer {
+    height: 60px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.popup-footer > div {
+    width: 80px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.popup-footer .close-popup-btn {
+    margin-right: 10px;
+}
+.popup-footer .close-popup-btn:hover {
+    background-color: #e5e5e5;
+}
+.popup-footer .confirm-btn {
+    color: white;
+}

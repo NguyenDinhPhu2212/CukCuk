@@ -1,0 +1,30 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    width: max-content;
+    background-color: #019160;
+    font-size: 13px;
+    color: #ffffff;
+    padding: 0px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #2fbe8e;
+    color: white;
+}
+.button:focus {
+    background-color: #01b075;
+}
+.button-icon {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+.add-employee-button .button-icon {
+    background-image: url("../../assets/resource/icon/add.png");
+}

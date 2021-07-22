@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "Google Sans-Regular";
+    src: url("../../assets/resource/font/GoogleSans-Regular.otf") format("woff2");
+}
+.GGSans-Regular{
+    margin: 0;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: "Google Sans-Regular", sans-serif;
+}

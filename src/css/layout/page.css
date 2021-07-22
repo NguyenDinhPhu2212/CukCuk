@@ -1,0 +1,167 @@
+/* CSS for filter bar */
+.filter-bar {
+    padding: 0 16px 10px 16px;
+}
+.filter-bar .filter-form {
+    display: flex;
+    align-items: center;
+}
+.filter-form > .dropdown {
+    margin-left: 10px;
+}
+.filter-form .input-information {
+    display: inline-flex;
+    align-items: center;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.filter-form .input-information .icon-search {
+    height: 16px;
+    width: 16px;
+    object-fit: contain;
+    background-image: url("../../assets/resource/icon/search.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 16px center;
+}
+.filter-form .input-information .input-text {
+    width: 100%;
+    border: none;
+    color: #454545;
+    padding-left: 40px;
+}
+
+.filter-form .input-information .input-text:focus {
+    outline: none;
+}
+.filter-bar .refresh-btn {
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    align-self: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* CSS for paging-bar */
+.paging-bar {
+    display: flex;
+    justify-content: space-around;
+    height: 56px;
+    width: 100%;
+    font-size: 13px;
+}
+.paging-bar .counter {
+    width: 200px;
+}
+.icon-default {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+.paging-bar .pagination {
+    width: 400px;
+}
+
+.paging-bar .pagination div {
+    margin: auto 10px;
+}
+.paging-bar .pagination .icon-default {
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 2px 2px;
+}
+.firstpage-button {
+    background-image: url("../../assets/resource/icon/btn-firstpage.svg");
+}
+.prev-page-button {
+    background-image: url("../../assets/resource/icon/btn-prev-page.svg");
+}
+.next-page-button {
+    background-image: url("../../assets/resource/icon/btn-next-page.svg");
+}
+.lastpage-button {
+    background-image: url("../../assets/resource/icon/btn-lastpage.svg");
+}
+.paging-bar .index {
+    width: 400px;
+}
+.paging-bar .pagination .index-bar {
+    width: 190px;
+    overflow: hidden;
+}
+.paging-bar .pagination .page-list {
+    width: fit-content;
+    list-style: none;
+    padding-left: 0px !important;
+}
+.paging-bar .pagination .page-list li {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #bbbbbb;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: auto 5px;
+}
+
+.current-page {
+    outline: none;
+    background-color: #019160;
+    color: white;
+}
+.paging-bar .pagination .page-list li:hover {
+    background-color: #2fbe8e !important;
+    color: white;
+}
+/* CSS for table */
+.employee-list {
+    height: calc(100vh - 240px);
+    overflow: auto;
+    margin: 0 16px;
+}
+table th,
+td {
+    border-bottom: 1px solid #bbbbbb;
+    padding: 10px 16px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+    max-height: 100%;
+    empty-cells: show;
+    font-size: 13px;
+    table-layout: fixed;
+}
+th {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+}
+tbody tr td:nth-child(9) {
+    text-align: right;
+}
+tbody tr:hover {
+    background-color: #bbbbbb;
+}
+.employee-list::-webkit-scrollbar-track {
+    margin-top: 38px;
+}
+
+.row-clicked {
+    background-color: #019160 !important;
+    color: white;
+}

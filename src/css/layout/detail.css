@@ -1,0 +1,152 @@
+/* CSS for content */
+.employee-information-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(186, 186, 186, 0.4);
+    z-index: 20;
+}
+.employee-detail-content {
+    max-height: 100%;
+    display: flex;
+    width: calc(100% - 32px);
+    margin: 0 16px;
+}
+.employee-detail .dropdown {
+    /* margin-bottom: 16px; */
+    width: 100% !important;
+    border-radius: 4px;
+}
+.employee-detail-content .avatar {
+    width: 200px;
+    text-align: center;
+    margin-right: 24px;
+}
+.employee-detail-content .avatar .avatar-default {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 1px solid #bbbbbb;
+    margin: 24px auto;
+}
+.employee-detail-content .avatar .note {
+    margin: auto 32px;
+    font-size: 13px;
+}
+.employee-detail-content .employee-information > div > .form-title {
+    margin: 24px auto;
+    font-size: 20px;
+    line-height: 36px;
+    position: relative;
+}
+.employee-detail-content .employee-information > div > .form-title::before {
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    height: 0;
+    width: 80px;
+    background-color: #01b075;
+    border: 2px solid #01b075;
+}
+.employee-detail-content .flex-column label,
+.employee-detail-content .flex-column span {
+    font-size: 13px;
+}
+.employee-detail-content form .flex-column {
+    width: 48%;
+    margin-bottom: 16px;
+    position: relative;
+}
+.employee-detail-content form .notice {
+    display: none;
+    position: absolute;
+    bottom: -12px;
+    font-size: 11px;
+    color: red;
+}
+/* CSS for general */
+
+.employee-detail {
+    max-width: 700px;
+    height: auto;
+    margin: auto;
+    border: 1px solid #bbbbbb;
+    border-radius: 6px;
+    background-color: white;
+    margin: 24px auto;
+}
+.employee-detail .employee-information {
+    width: calc(100vw - 300px);
+    height: calc(100% - 200px);
+}
+div#employee-form-dialog .ui-accordion-header {
+    background-color: red;
+}
+/* CSS for footer */
+.footer {
+    height: 80px;
+    width: 100%;
+    background-color: #bbbbbb;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 13px;
+}
+.footer > div:nth-child(2) {
+    margin-right: 16px;
+}
+.footer .button {
+    width: auto;
+    padding: 0 24px;
+}
+.footer .destroy-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+}
+.footer .destroy-button:hover {
+    background-color: #454545;
+    color: white;
+}
+.save-button-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/resource/font/fontawesome-5.15.1/svgs/regular/save.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 8px;
+}
+/* CSS for header */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    height: 48px !important;
+    margin-bottom: 24px;
+}
+.form-header .form-header-title {
+    font-size: 24px;
+    font-weight: 300;
+    margin: 24px !important;
+}
+.form-header .exit-button {
+    font-size: 25px;
+    color: #bbbbbb;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.form-header .exit-button:hover {
+    background-color: #E5E5E5;
+}

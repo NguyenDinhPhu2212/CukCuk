@@ -72,29 +72,8 @@ export default {
             this.setPopup({ display: false, type: {} });
         },
         //sự kiện khi nhấn confirm popup
-        clickConfirm: async function () {
-            let type = this.getPopup.type;
-            //Kiểm tra là loại popup
-            if (type != "exit") {
-                //lấy dữ liệu cần được sử dụng
-                let executeData = this.$store.getters.getExecuteData;
-                if (type == "delete") {
-                    await this.deleteEmployee(executeData);
-                } else if (type == "update") {
-                    await this.updateData(executeData);
-                } else if (type == "create") {
-                    await this.createNewEmployee(executeData);
-                }
-                await this.getEmployee();
-            }
-            //ẩn popup, dialog, contextmenu
-            this.setDialog(false);
-            this.setPopup({ display: false, type: {} });
-            this.contextMenuPosition({
-                display: false,
-                top: 0,
-                left: 0,
-            });
+        clickConfirm: function () {
+            this.$emit("clickConfirm");
         },
     },
 };

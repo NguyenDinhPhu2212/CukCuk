@@ -20,7 +20,12 @@
     height: 100vh;
     width: 100vw;
     position: relative;
-    font-family: "Google Sans-Regular", sans-serif;
+    font-family: "Google Sans-Regular", sans-serif !important;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 </style>
  <script>

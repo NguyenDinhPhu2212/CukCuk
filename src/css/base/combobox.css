@@ -56,13 +56,13 @@
 }
 .point-down-icon {
     font-weight: 0;
-    width: 16px;
-    height: 16px;
-    margin: auto 10px;
-    background-image: url("../../assets/resource/font/fontawesome-5.15.1/svgs/solid/chevron-down.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
+    width: 20px;
+    height: 40px;
+    padding: 10px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .choosed{
     background-color: #019160 !important;
@@ -70,14 +70,6 @@
 }
 .autocomplete-active{
     background-color: #bbbbbb;
-}
-.border-focus{
-    border: 1px solid #01b075;
-    border-radius: 6px;
-}
-.notice-border {
-    border: 1px solid red !important;
-    border-radius: 4px;
 }
 .display-options{
     display: block;

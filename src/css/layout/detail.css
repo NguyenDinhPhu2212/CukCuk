@@ -32,10 +32,7 @@
     border: 1px solid #bbbbbb;
     margin: 24px auto;
 }
-.employee-detail-content .avatar .note {
-    margin: auto 32px;
-    font-size: 13px;
-}
+
 .employee-detail-content .employee-information > div > .form-title {
     margin: 24px auto;
     font-size: 20px;
@@ -60,13 +57,6 @@
     margin-bottom: 16px;
     position: relative;
 }
-.employee-detail-content form .notice {
-    display: none;
-    position: absolute;
-    bottom: -12px;
-    font-size: 11px;
-    color: red;
-}
 /* CSS for general */
 
 .employee-detail {
@@ -89,7 +79,7 @@ div#employee-form-dialog .ui-accordion-header {
 .footer {
     height: 80px;
     width: 100%;
-    background-color: #bbbbbb;
+    background-color: #E5e5e5;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -114,8 +104,7 @@ div#employee-form-dialog .ui-accordion-header {
     margin-right: 2px;
 }
 .footer .destroy-button:hover {
-    background-color: #454545;
-    color: white;
+    background-color: #bbbbbb;
 }
 .save-button-icon {
     width: 16px;

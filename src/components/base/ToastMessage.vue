@@ -22,6 +22,7 @@
 @import url("../../css/base/message.css");
 </style>
 <script>
+import {TIME} from "../../constants/time"
 export default {
     name: "ToastMessage",
     props: {
@@ -35,7 +36,7 @@ export default {
         let vm= this;
         setTimeout(function () {
             vm.$store.commit("deleteToast", vm.toast.index);
-        }, 5000);
+        }, TIME.TOAST_DURATION);
     },
     methods: {
         //sự kiện khi nhấn tắt toast message

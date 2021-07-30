@@ -1,30 +1,22 @@
-import axios from "axios";
-import * as utils from "../scripts/utils.js";
+
+// import * as utils from "../scripts/utils.js";
 import { mapMutations } from "vuex";
+
+import { TOAST } from "../constants/toast";
+import * as ApiFunction from "../scripts/api.js";
 export const api = {
     data() {
-        return {
-            apiEmployee: "http://cukcuk.manhnv.net/v1/Employees",
-            apiDepartment: "http://cukcuk.manhnv.net/api/Department",
-            apiPosition: "http://cukcuk.manhnv.net/v1/Positions",
-        };
+        return {};
     },
     methods: {
         ...mapMutations({
-            setDataLength: "setDataLength",
             setEmployee: "setEmployee",
             addToast: "addToast",
+            setLoading: "setLoading",
         }),
-        async getEmployee() {
-            await axios.get(this.apiEmployee).then((response) => {
-                response.data.forEach((value) => {
-                    utils.trainingData(value);
-                });
-                this.setEmployee(response.data);
-            });
-        },
         async getDepartment() {
-            await axios.get(this.apiDepartment).then((response) => {
+            const response = await ApiFunction.getDepartment();
+            if (response.status == 200) {
                 for (let item of response.data) {
                     let tmp = {
                         id: item.DepartmentId,
@@ -32,47 +24,51 @@ export const api = {
                     };
                     this.dataDepartment.push(tmp);
                 }
-            });
+            }
         },
         async getPosition() {
-            await axios.get(this.apiPosition).then((response) => {
+            const response = await ApiFunction.getPosition();
+            if (response.status == 200) {
                 for (let item of response.data) {
-                    let tmp = { id: item.PositionId, text: item.PositionName };
+                    let tmp = {
+                        id: item.PositionId,
+                        text: item.PositionName,
+                    };
                     this.dataPosition.push(tmp);
                 }
-            });
+            }
         },
         async deleteEmployee(employee) {
-            await axios
-                .delete(this.apiEmployee + "/" + employee.EmployeeId)
-                .then(() => {
-                    this.addToast({
-                        iconClass: "far fa-check",
-                        content: "Thành công",
-                        color: "#01B075",
-                    });
-                });
+            const response = await ApiFunction.deleteEmployee(employee);
+            if (response.status == 200) {
+                this.addToast(TOAST.SUCCESS_DELETE);
+            } else {
+                this.addToast(TOAST.DENY);
+            }
         },
         async updateData(employee) {
-            try {
-                await axios.put(
-                    `http://cukcuk.manhnv.net/v1/Employees/${employee.EmployeeId}`,
-                    employee
-                );
-            } catch (error) {
-                alert(JSON.stringify(error));
-                console.log(error);
+            const response = await ApiFunction.updateData(employee);
+            if (response.status == 200) {
+                this.addToast(TOAST.SUCCESS_DELETE);
+            } else {
+                this.addToast(TOAST.DENY);
             }
         },
         async createNewEmployee(employee) {
-            try {
-                await axios.post(
-                    "http://cukcuk.manhnv.net/v1/Employees",
-                    employee
-                );
-            } catch (error) {
-                alert(JSON.stringify(error));
-                console.log(error);
+            const response = await ApiFunction.createNewEmployee(employee);
+            if (response.status == 200) {
+                this.addToast(TOAST.SUCCESS_DELETE);
+            } else {
+                this.addToast(TOAST.DENY);
+            }
+        },
+        async execute(type, data) {
+            if (type == "update") {
+                await this.updateData(data);
+            } else if (type == "delete") {
+                await this.deleteEmployee(data);
+            } else if (type == "create") {
+                await this.createNewEmployee(data);
             }
         },
     },

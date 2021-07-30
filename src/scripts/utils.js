@@ -31,8 +31,6 @@ export const convertWorkStatus = [
     { id: 3, text: "Khác" },
 ];
 
-export const departmentDictionary = {};
-export const positionDictionary = {};
 /**
  * Tranning dữ liệu nhận được từ api
  * @param {aby} object : object cần training

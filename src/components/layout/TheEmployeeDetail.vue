@@ -7,7 +7,7 @@
             <div class="form-header">
                 <div class="form-header-title">THÔNG TIN NHÂN VIÊN</div>
                 <div class="exit-button" @click="clickExitBtn">
-                    <i class="far fa-times"></i>
+                    <i class="fal fa-times"></i>
                 </div>
             </div>
             <div class="employee-detail-content">
@@ -26,12 +26,7 @@
                     <div class="general-information">
                         <div class="form-title">A.THÔNG TIN CHUNG</div>
                         <form class="general-information-form flex-column">
-                            <div
-                                class="
-                                    employee-id
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <BaseInput
                                     label="Mã nhân viên:"
                                     :required="true"
@@ -72,6 +67,7 @@
                                             },
                                         }"
                                         :tabindex="4"
+                                        placeholder="Nam"
                                         @result="
                                             (result) =>
                                                 getData(result, 'gender')
@@ -81,12 +77,7 @@
                                     />
                                 </div>
                             </div>
-                            <div
-                                class="
-                                    identity-information
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <BaseInput
                                     label="Số CMTND/ Căn cước:"
                                     :required="true"
@@ -94,6 +85,7 @@
                                     format="number"
                                     v-model="currentEmployee.IdentityNumber"
                                     ref="check-4"
+                                    fieldName="Identity"
                                 />
 
                                 <BaseInput
@@ -110,12 +102,7 @@
                                 />
                             </div>
 
-                            <div
-                                class="
-                                    contact-method
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <BaseInput
                                     label="Email:"
                                     type="email"
@@ -123,6 +110,7 @@
                                     :tabindex="8"
                                     v-model="currentEmployee.Email"
                                     ref="check-5"
+                                    fieldName="Email"
                                 />
                                 <BaseInput
                                     label="Số điện thoại:"
@@ -132,6 +120,7 @@
                                     format="number"
                                     v-model="currentEmployee.PhoneNumber"
                                     ref="check-6"
+                                    fieldName="PhoneNumber"
                                 />
                             </div>
                         </form>
@@ -140,12 +129,7 @@
                     <div class="job-information">
                         <div class="form-title">B.THÔNG TIN CÔNG VIỆC</div>
                         <form class="job-information-form flex-column">
-                            <div
-                                class="
-                                    office
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <div class="flex-column">
                                     <label for="position">Vị trí</label>
                                     <BaseCombobox
@@ -159,6 +143,7 @@
                                             },
                                         }"
                                         :tabindex="10"
+                                        placeholder="Tất cả phòng ban"
                                         @result="
                                             (result) =>
                                                 getData(result, 'position')
@@ -177,6 +162,7 @@
                                                 text: currentEmployee.DepartmentName,
                                             },
                                         }"
+                                        placeholder="Chức vụ"
                                         :tabindex="11"
                                         @result="
                                             (result) =>
@@ -185,12 +171,7 @@
                                     />
                                 </div>
                             </div>
-                            <div
-                                class="
-                                    salary-information
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <BaseInput
                                     label="Mã số thuế cá nhân:"
                                     type="number"
@@ -206,12 +187,7 @@
                                     v-model="currentEmployee.Salary"
                                 />
                             </div>
-                            <div
-                                class="
-                                    working-status
-                                    flex-justify-space-between flex-wrap
-                                "
-                            >
+                            <div class="flex-justify-space-between flex-wrap">
                                 <BaseInput
                                     label="Ngày gia nhập công ty:"
                                     type="date"
@@ -230,6 +206,7 @@
                                         :choosed="{
                                             ...workStatus,
                                         }"
+                                        placeholder="Đang làm việc"
                                         :tabindex="15"
                                         @result="
                                             (result) =>
@@ -255,9 +232,16 @@
 <style scoped>
 @import url("../../css/common/flex.css");
 @import url("../../css/layout/detail.css");
+.dropdown {
+    margin-top: 5px;
+}
 </style>
 
 <script>
+import { mapMutations } from "vuex";
+import { TOAST } from "../../constants/toast";
+import { POPUP } from "../../constants/popup";
+import { newCode } from "../../scripts/api";
 export default {
     name: "TheEmployeeDetail",
     props: {
@@ -269,32 +253,14 @@ export default {
     },
     data() {
         return {
-            exitPopup: {
-                display: true,
-                type: "exit",
-                title: "Thoát form thông tin",
-                showWarning: true,
-                warningIconColor: "#ffbb00",
-                popupContent: "Bạn có chắc muốn thoát hay không?",
-                showCloseBtn: true,
-                closeBtn: "Tiếp tục nhập",
-                confirmBtn: "Thoát",
-                confirmColor: "#ffbb00",
-            },
-            savePopup: {
-                display: true,
-                type: "update",
-                title: "Lưu bản ghi",
-                showWarning: true,
-                warningIconColor: "#01B075",
-                popupContent: "Bạn có chắc muốn lưu bản ghi không?",
-                showCloseBtn: true,
-                closeBtn: "Tiếp tục nhập",
-                confirmBtn: "Lưu",
-                confirmColor: "#01B075",
-            },
             executeData: {},
         };
+    },
+    async updated() {
+        if (!Object.keys(this.data).length) {
+            this.$refs["check-1"].inputValue = await newCode();
+        }
+        this.$refs["check-1"].$refs.BaseInput.focus();
     },
     computed: {
         //lấy ra work status của nhân viên hiện tại
@@ -314,6 +280,11 @@ export default {
         },
     },
     methods: {
+        ...mapMutations({
+            setPopup: "setPopup",
+            setExecuteData: "setExecuteData",
+            addToast: "addToast",
+        }),
         //lấy ra object work status
         createWS(workStatus) {
             return this.dataWorkStatus.find((element) => {
@@ -322,7 +293,7 @@ export default {
         },
         //sự kiện khi nhấn nút thoát dialog
         clickExitBtn: function () {
-            this.$store.commit("setPopup", this.exitPopup);
+            this.setPopup(POPUP.EXIT_POPUP);
             Object.entries(this.$refs).forEach((component) => {
                 component[1].error = false;
             });
@@ -338,17 +309,16 @@ export default {
                 }
             });
             if (!errors.length) {
-                //kiểm tra xem người dùng đang update hay tạo mới
-                if (!Object.keys(this.data).length)
-                    this.savePopup.type = "create";
-                else this.savePopup.type = "update";
-
                 let currentEmployee = this.currentEmployee;
                 //lấy dữ liệu cuối cùng
                 this.update(this.executeData, currentEmployee);
+                this.setExecuteData(this.executeData);
                 console.log(this.executeData);
-                this.$store.commit("setExecuteData", this.executeData);
-                this.$store.commit("setPopup", this.savePopup);
+                if (!Object.keys(this.data).length)
+                    this.setPopup(POPUP.CREATE_NEW_POPUP);
+                else this.setPopup(POPUP.UPDATE_POPUP);
+            } else {
+                this.addToast(TOAST.LACK_INFORMATION);
             }
         },
         //format dateString theo định dạng yyyy-mm-dd

@@ -63,9 +63,11 @@
 }
 .popup-footer .close-popup-btn {
     margin-right: 10px;
+    width: max-content !important;
+    padding: 0 10px !important;
 }
 .popup-footer .close-popup-btn:hover {
-    background-color: #e5e5e5;
+    background-color: #bbbbbb;
 }
 .popup-footer .confirm-btn {
     color: white;

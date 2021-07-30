@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="display">
-            <div class="flex-justify-space-between" style="margin: 10px 16px">
+        <div class="page-content">
+            <div class="flex-justify-space-between" style="margin: 0 16px">
                 <h3>Danh sách nhân viên</h3>
                 <BaseButton
                     v-on:clicked="clickAddBtn"
@@ -17,18 +17,22 @@
                             class="input-text icon-search"
                             id="ftText"
                             placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại"
+                            v-model="keyWord"
                         />
                     </div>
                     <BaseCombobox
                         dropdownId="ftDepartmentDropdown"
                         inputId="ftDepartment"
                         :data="dataDepartment"
+                        placeholder="Tất cả phòng ban"
+                        @result="(result) => filter(result, 'department')"
                     />
-
                     <BaseCombobox
                         dropdownId="ftPositionDropdown"
                         inputId="ftPosition"
                         :data="dataPosition"
+                        placeholder="Tất cả chức vụ"
+                        @result="(result) => filter(result, 'position')"
                     />
                 </form>
                 <div id="refresh" class="refresh-btn" @click="clickRefreshBtn">
@@ -63,25 +67,40 @@
                             <th fieldname="WorkStatus">Tình trạng công việc</th>
                         </tr>
                     </thead>
-                    <tbody
-                        v-for="(employee, index) in employeeList"
-                        :key="index"
-                    >
+                    <tbody ref="tbody">
                         <tr
                             class="row"
+                            v-for="(employee, index) in employeeList"
+                            :key="index"
                             @contextmenu="clickRow($event, employee)"
                             @dblclick="dbclickRow(employee)"
-                            :class="{grey: index %2 == 1}"
+                            :class="{ grey: index % 2 == 1 }"
                         >
-                            <td>{{ employee.EmployeeCode }}</td>
-                            <td>{{ employee.FullName }}</td>
-                            <td>{{ employee.GenderName }}</td>
-                            <td>{{ employee.DateOfBirth }}</td>
-                            <td>{{ employee.PhoneNumber }}</td>
-                            <td>{{ employee.Email }}</td>
-                            <td>{{ employee.PositionName }}</td>
-                            <td>{{ employee.DepartmentName }}</td>
-                            <td>
+                            <td v-tooltip.top-center="employee.EmployeeCode">
+                                {{ employee.EmployeeCode }}
+                            </td>
+                            <td v-tooltip.top-center="employee.FullName">
+                                {{ employee.FullName }}
+                            </td>
+                            <td v-tooltip.top-center="employee.GenderName">
+                                {{ employee.GenderName }}
+                            </td>
+                            <td v-tooltip.top-center="employee.DateOfBirth">
+                                {{ employee.DateOfBirth }}
+                            </td>
+                            <td v-tooltip.top-center="employee.PhoneNumber">
+                                {{ employee.PhoneNumber }}
+                            </td>
+                            <td v-tooltip.top-center="employee.Email">
+                                {{ employee.Email }}
+                            </td>
+                            <td v-tooltip.top-center="employee.PositionName">
+                                {{ employee.PositionName }}
+                            </td>
+                            <td v-tooltip.top-center="employee.DepartmentName">
+                                {{ employee.DepartmentName }}
+                            </td>
+                            <td v-tooltip.top-center="employee.Salary">
                                 {{ employee.Salary
                                 }}<span
                                     style="font-style: italic; color: #454545"
@@ -89,34 +108,18 @@
                                     (VND)</span
                                 >
                             </td>
-                            <td>{{ employee.WorkStatus }}</td>
+                            <td v-tooltip.top-center="employee.WorkStatus">
+                                {{ employee.WorkStatus }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="paging-bar flex-align-center">
-                <div class="counter">
-                    Hiển thị <span class="begin">1</span>-
-                    <span class="end">10</span>/
-                    <span class="total-person">1000</span> nhân viên
-                </div>
-                <div class="pagination flex-justify-space-around">
-                    <div class="firstpage-button icon-default"></div>
-                    <div class="prev-page-button icon-default"></div>
-                    <div class="index-bar">
-                        <ul class="page-list flex-align-center">
-                            <li v-for="index in dataLength" :key="index">
-                                {{ index }}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="next-page-button icon-default"></div>
-                    <div class="lastpage-button icon-default"></div>
-                </div>
-                <div class="number-per-page">
-                    <span class="number-person">10</span> nhân viên/trang
-                </div>
-            </div>
+            <Pagination
+                ref="pagination"
+                @currentPage="(index) => (current = index)"
+            ></Pagination>
+            <Loading></Loading>
         </div>
         <TheEmployeeDetail
             :data="data"
@@ -127,11 +130,160 @@
         />
         <ContextMenu ref="contextMenu" />
         <ToastGroup></ToastGroup>
-        <Popup></Popup>
+        <Popup @clickConfirm="clickConfirm"></Popup>
     </div>
 </template>
-<style scoped>
+
+<script>
+import BaseButton from "../base/Button.vue";
+import TheEmployeeDetail from "./TheEmployeeDetail.vue";
+import ContextMenu from "../base/ContextMenu.vue";
+import * as utils from "../../scripts/utils.js";
+import { api } from "../../mixins/api";
+import { mapGetters, mapMutations } from "vuex";
+import Pagination from "../base/Pagination.vue";
+// import { getEmployeeFilter } from "../../scripts/api.js";
+export default {
+    name: "ThePage",
+    mixins: [api],
+    components: {
+        BaseButton,
+        TheEmployeeDetail,
+        ContextMenu,
+        Pagination,
+    },
+    data() {
+        return {
+            data: {},
+            dataDepartment: [],
+            dataPosition: [],
+            dataWorkStatus: utils.convertWorkStatus,
+            dataGender: utils.convertGender,
+            current: 1,
+            keyWord: "",
+            filterData: {
+                pageSize: 10,
+                pageNumber: 0,
+                employeeFilter: "NV",
+                departmentId: "",
+                positionId: "",
+            },
+        };
+    },
+    /**
+     * Lấy dữ liệu từ api department và position
+     */
+    async created() {
+        await this.getDepartment();
+        this.dataDepartment = [...this.dataDepartment];
+        await this.getPosition();
+        this.dataPosition = [...this.dataPosition];
+        this.$refs.pagination.currentPage = 1;
+        await this.getData(1);
+    },
+    computed: {
+        ...mapGetters({
+            employeeList: "getEmployee",
+            getPopup: "getPopup",
+        }),
+    },
+    watch: {
+        filterData: async function () {
+            console.log(this.filterData);
+            this.$store.commit("setFilter", this.filterData);
+            this.$refs.pagination.currentPage = 1;
+            await this.getData(1);
+        },
+        keyWord: function () {
+            this.filterData.employeeFilter = this.keyWord;
+            this.filterData = { ...this.filterData };
+        },
+    },
+    methods: {
+        ...mapMutations({
+            setEmployee: "setEmployee",
+            executeData: "setExecuteData",
+            dialog: "setDialog",
+            contextMenuPosition: "setContextMenu",
+            setLoading: "setLoading",
+            setPopup: "setPopup",
+        }),
+        clickConfirm: async function () {
+            let type = this.getPopup.type;
+            //Kiểm tra là loại popup
+            if (type != "exit") {
+                //lấy dữ liệu cần được sử dụng
+                let executeData = this.$store.getters.getExecuteData;
+                await this.execute(type, executeData);
+            }
+            //ẩn popup, dialog, contextmenu
+            this.dialog(false);
+            this.setPopup({ display: false });
+            this.contextMenuPosition({
+                display: false,
+            });
+            if (type != "exit") {
+                await this.getData(this.current);
+            }
+        },
+        //sự kiện khi nhấn nút thêm nhân viên
+        clickAddBtn: function () {
+            this.dialog(true);
+            this.data = {};
+        },
+        //sự kiện khi nhấn nút refresh
+        clickRefreshBtn: async function () {
+            this.setLoading(true);
+            let vm = this;
+            setTimeout(async function () {
+                if (vm.$refs.pagination.currentPage == 1) await vm.getData(1);
+                else vm.$refs.pagination.currentPage = 1;
+                vm.setLoading(false);
+            }, 1000);
+        },
+        //sự kiện khi right click
+        clickRow: function (event, employee) {
+            event.preventDefault();
+
+            this.$refs.tbody.children.forEach((element) => {
+                element.classList.remove("row-clicked");
+            });
+            event.currentTarget.classList.add("row-clicked");
+            this.executeData(employee);
+            this.data = { ...employee };
+            this.contextMenuPosition({
+                display: true,
+                top: event.clientY - 20,
+                left: event.clientX,
+            });
+        },
+        //sự kiện khi nhấn đúp
+        dbclickRow: function (employee) {
+            this.dialog(true);
+            this.data = { ...employee };
+        },
+        async getData(index) {
+            this.setLoading(true);
+            let filter = { ...this.$store.getters.getFilter };
+            filter.pageNumber = (index - 1) * 10 + 1;
+            this.$store.commit("setFilter", filter);
+            await this.$store.dispatch("employeeFilter");
+            this.setLoading(false);
+        },
+        filter(result, type) {
+            if (type == "department") {
+                this.filterData.departmentId = result.id;
+            } else this.filterData.positionId = result.id;
+            this.filterData = { ...this.filterData };
+        },
+    },
+};
+</script><style scoped>
 @import url("../../css/layout/page.css");
+@import url("../../css/common/tooltip.css");
+.page-content {
+    position: relative;
+}
 ::-webkit-scrollbar {
     height: 5px;
     width: 5px;
@@ -147,88 +299,7 @@
 .grey {
     background-color: #e5e5e5;
 }
-.grey:hover{
+.grey:hover {
     background-color: #bbbbbb;
 }
 </style>
-<script>
-import BaseButton from "../base/BaseButton.vue";
-import TheEmployeeDetail from "./TheEmployeeDetail.vue";
-import ContextMenu from "../base/ContextMenu.vue";
-import ToastGroup from "../base/ToastGroup.vue";
-import Popup from "../base/Popup.vue";
-import * as utils from "../../scripts/utils.js";
-import { api } from "../../mixins/api";
-import $ from "jquery";
-import { mapGetters, mapMutations } from "vuex";
-export default {
-    name: "ThePage",
-    mixins: [api],
-    components: {
-        BaseButton,
-        TheEmployeeDetail,
-        ContextMenu,
-        ToastGroup,
-        Popup,
-    },
-    data() {
-        return {
-            data: {},
-            dataDepartment: [],
-            dataPosition: [],
-            dataWorkStatus: utils.convertWorkStatus,
-            dataGender: utils.convertGender,
-        };
-    },
-    /**
-     * Lấy dữ liệu từ api department và position
-     */
-    async created() {
-        await this.getEmployee();
-        await this.getDepartment();
-        this.dataDepartment = [...this.dataDepartment];
-        await this.getPosition();
-        this.dataPosition = [...this.dataPosition];
-    },
-    computed: {
-        ...mapGetters({
-            employeeList: "getEmployee",
-            dataLength: "getDataLength",
-        }),
-    },
-    methods: {
-        ...mapMutations({
-            executeData: "setExecuteData",
-            dialog: "setDialog",
-            contextMenuPosition: "setContextMenu",
-        }),
-        //sự kiện khi nhấn nút thêm nhân viên
-        clickAddBtn: function () {
-            this.dialog(true);
-            this.data = {};
-        },
-        //sự kiện khi nhấn nút refresh
-        clickRefreshBtn: async function () {
-            await this.getEmployee();
-        },
-        //sự kiện khi right click
-        clickRow: function (event, employee) {
-            event.preventDefault();
-            $(".row").removeClass("row-clicked");
-            $(event.currentTarget).addClass("row-clicked");
-            this.executeData(employee);
-            this.data = { ...employee };
-            this.contextMenuPosition({
-                display: true,
-                top: event.clientY - 20,
-                left: event.clientX,
-            });
-        },
-        //sự kiện khi nhấn đúp
-        dbclickRow: function (employee) {
-            this.dialog(true);
-            this.data = { ...employee };
-        },
-    },
-};
-</script>

@@ -16,14 +16,19 @@
                 @keydown.enter.prevent="enter"
                 @keydown.down.prevent="down"
                 @keydown.up.prevent="up"
-                @focus="input"
+                @focus="clickInput"
                 @input="input"
                 @click="clickInput"
                 autocomplete="off"
                 ref="BaseInput"
                 v-model="search"
             />
-            <div class="point-down-icon" @click="clickIcon"></div>
+            <div class="point-down-icon" @click="clickIcon">
+                <img
+                    src="../../assets/resource/font/fontawesome-5.15.1/svgs/solid/chevron-down.svg"
+                    alt=""
+                />
+            </div>
         </div>
         <div
             class="select-options dropdown-border"
@@ -52,10 +57,7 @@
         </div>
     </div>
 </template>
-<style lang="css" scoped>
-@import url("../../css/base/dropdown.css");
-@import url("../../css/common/flex.css");
-</style>
+
 <script>
 import $ from "jquery";
 
@@ -73,6 +75,7 @@ export default {
         choosed: { type: Object, default: () => {} },
         required: { type: Boolean, default: false },
         tabindex: Number,
+        placeholder:String
     },
     data() {
         return {
@@ -85,12 +88,6 @@ export default {
             result: this.choosed || this.data[0],
         };
     },
-
-    computed: {
-        placeholder() {
-            return this.data[0]?.text;
-        },
-    },
     watch: {
         result() {
             this.$emit("result", this.result);
@@ -98,15 +95,16 @@ export default {
         },
         choosed() {
             this.$emit("update:choosed", this.choosed);
-            this.search = this.choosed.text;
+            this.search = this.choosed?.text;
             this.result = { ...this.choosed };
         },
     },
     created() {
+        let vm = this;
         window.addEventListener("click", (event) => {
             if (!this.$el.contains(event.target)) {
-                this.showOption = false;
-                this.isTrue = false;
+                vm.showOption = false;
+                vm.isTrue = false;
             }
         });
         this.options = [...this.data];
@@ -139,9 +137,11 @@ export default {
             this.isTrue = true;
             //hiển thị options box
             this.showOption = !this.showOption;
-            //focus cho input
-            this.$refs.BaseInput.focus();
-            this.filterRS();
+            if (this.showOption) {
+                //focus cho input
+                this.$refs.BaseInput.focus();
+                this.filterRS();
+            }
         },
         /**
          * Sự kiện khi nhấn chọn 1 option
@@ -199,13 +199,14 @@ export default {
             this.filterRS();
 
             if (!this.search) {
-                this.error = true;
+                if (this.required) this.error = true;
+                else this.error = false;
             } else {
                 //nếu option box rỗng
                 if (this.options.length == 0) {
                     //ẩn option box
                     this.showOption = false;
-                    this.error = true;
+                    if (this.required) this.error = true;
                 } else {
                     //nếu có hiện viền xanh
                     this.showOption = true;
@@ -216,12 +217,28 @@ export default {
         },
         onBlur(event) {
             this.showOption = false;
-            if (event.currentTarget.value == "" && this.required) {
-                this.error = true;
+            if (this.required) {
+                if (event.currentTarget.value == "") {
+                    this.error = true;
+                    return;
+                } else this.error = false;
             } else {
+                this.error = false;
                 this.isTrue = false;
             }
         },
     },
 };
 </script>
+<style lang="css" scoped>
+@import url("../../css/base/combobox.css");
+@import url("../../css/common/flex.css");
+.border-focus {
+    border: 1px solid #01b075;
+    border-radius: 4px;
+}
+.notice-border {
+    border: 1px solid red;
+    border-radius: 4px;
+}
+</style>

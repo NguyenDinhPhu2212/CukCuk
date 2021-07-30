@@ -10,6 +10,45 @@
         </div>
     </div>
 </template>
+
+<script>
+import { api } from "../../mixins/api";
+import {POPUP} from "../../constants/popup"
+export default {
+    name: "ContextMenu",
+    mixins: [api],
+    created() {
+        //sự kiện khi nhấn ra ngoiaf context menu
+        window.addEventListener("click", (event) => {
+            if (!this.$el.contains(event.target)) {
+                this.$store.commit("setContextMenu", {
+                    display: false,
+                    top: 0,
+                    left: 0,
+                });
+            }
+        });
+    },
+    data() {
+        return {
+            
+        };
+    },
+    computed: {
+        getInfor: function () {
+            return this.$store.getters.getContextMenu;
+        },
+    },
+    methods: {
+        clickUpdate: function () {
+            this.$store.commit("setDialog", true);
+        },
+        clickDelete: function () {
+            this.$store.commit("setPopup", POPUP.DELETE_POPUP);
+        },
+    },
+};
+</script>
 <style scoped>
 .row-service {
     position: absolute;
@@ -46,51 +85,3 @@
     background-color: #fa3636;
 }
 </style>
-<script>
-import { api } from "../../mixins/api";
-export default {
-    name: "ContextMenu",
-    mixins: [api],
-    created() {
-        //sự kiện khi nhấn ra ngoiaf context menu
-        window.addEventListener("click", (event) => {
-            if (!this.$el.contains(event.target)) {
-                this.$store.commit("setContextMenu", {
-                    display: false,
-                    top: 0,
-                    left: 0,
-                });
-            }
-        });
-    },
-    data() {
-        return {
-            popup: {
-                display: true,
-                type: "delete",
-                title: "Xoá bản ghi",
-                showWarning: true,
-                warningIconColor: "#F65454",
-                popupContent: "Bạn có chắc muốn xoá bản ghi này?",
-                showCloseBtn: true,
-                closeBtn: "Huỷ",
-                confirmBtn: "Xoá",
-                confirmColor: "#F65454",
-            },
-        };
-    },
-    computed: {
-        getInfor: function () {
-            return this.$store.getters.getContextMenu;
-        },
-    },
-    methods: {
-        clickUpdate: function () {
-            this.$store.commit("setDialog", true);
-        },
-        clickDelete: function () {
-            this.$store.commit("setPopup", this.popup);
-        },
-    },
-};
-</script>

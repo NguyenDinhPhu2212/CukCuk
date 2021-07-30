@@ -1,8 +1,4 @@
-/* .toast-message-container {
-    position: absolute;
-    top: 20px;
-    left: calc(50% - 150px);
-} */
+
 .toast-message {
     display: flex;
     align-items: center;
@@ -14,7 +10,7 @@
     width: 300px;
     position: relative;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-    background-color: #fff;
+    background-color: #fff !important;
 }
 .toast-message .message-icon {
     width: 30px;

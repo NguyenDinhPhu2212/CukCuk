@@ -125,7 +125,7 @@
 }
 /* CSS for table */
 .employee-list {
-    height: calc(100vh - 240px);
+    height: calc(100vh - 223px);
     overflow: auto;
     margin: 0 16px;
 }
@@ -135,7 +135,7 @@ td {
     padding: 10px 16px;
     text-align: left;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 

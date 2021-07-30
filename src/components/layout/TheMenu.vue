@@ -34,12 +34,22 @@
             <div class="navbar-item-text" v-show="showMenuText">
                 Mua hàng
             </div></router-link
+        ><router-link
+            to="/customer"
+            class="navbar-item flex-align-center"
+            @click.native="clickItem"
+            :class="{ clickItem: index == 4 }"
+        >
+            <div class="navbar-item-icon navbar-item-dic-employee-icon"></div>
+            <div class="navbar-item-text" v-show="showMenuText">
+                Danh mục khách hàng
+            </div></router-link
         >
         <router-link
             to="/employee"
             class="navbar-item flex-align-center"
             @click.native="clickItem"
-            :class="{ clickItem: index == 4 }"
+            :class="{ clickItem: index == 5 }"
         >
             <div class="navbar-item-icon navbar-item-dic-employee-icon"></div>
             <div class="navbar-item-text" v-show="showMenuText">
@@ -50,7 +60,7 @@
             to="/settings"
             class="navbar-item flex-align-center"
             @click.native="clickItem"
-            :class="{ clickItem: index == 5 }"
+            :class="{ clickItem: index == 6 }"
         >
             <div class="navbar-item-icon navbar-item-setting-icon"></div>
             <div class="navbar-item-text" v-show="showMenuText">
@@ -61,6 +71,7 @@
 </template>
 <style scoped>
 @import url("../../css/layout/navbar.css");
+
 </style>
 <script>
 import $ from "jquery";
@@ -74,7 +85,7 @@ export default {
     },
     data() {
         return {
-            index: 4,
+            index: 5,
         };
     },
     created() {

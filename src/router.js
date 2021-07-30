@@ -35,6 +35,15 @@ const router = new VueRouter({
             },
         },
         {
+            path: "/customer",
+            name: "Customer",
+            component: {
+                render(h) {
+                    return h("div", "Khách hàng");
+                },
+            },
+        },
+        {
             path: "/employee",
             name: "Employee",
             component: ThePage,

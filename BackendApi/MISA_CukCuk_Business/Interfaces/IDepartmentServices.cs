@@ -1,12 +1,13 @@
-﻿using MISA.CukCuk.Common.Entity;
+﻿
+using MISA.CukCuk.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.CukCuk.Business.Interfaces
+namespace MISA.CukCuk.Core.Interfaces
 {
     public interface IDepartmentServices:IBaseServices<Department>
     {
-        public bool CheckDepartment(Department department);
+        
     }
 }

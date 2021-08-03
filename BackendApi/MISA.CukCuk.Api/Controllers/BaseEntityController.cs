@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MISA.CukCuk.Business.Interfaces;
-using MISA.CukCuk.Common.Const;
-using MISA.CukCuk.Common.Entity;
-using MISA.CukCuk.Common.Properties;
+using MISA.CukCuk.Core.Interfaces;
+using MISA.CukCuk.Core.Const;
+using MISA.CukCuk.Core.Entity;
+using MISA.CukCuk.Core.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +47,7 @@ namespace MISA.CukCuk.Api.Controllers
                 ResponseMessage resMsg = new ResponseMessage();
                 resMsg.DevMsg = ex.Message;
                 resMsg.UserMsg = Resources.Server_Error;
-                resMsg.ErrorCode = MISAConst.MISAErrorException;
+                resMsg.ErrorCode = MISAConst.ErrorException;
                 return StatusCode(500, resMsg);
             }
         }
@@ -76,7 +76,7 @@ namespace MISA.CukCuk.Api.Controllers
                 ResponseMessage resMsg = new ResponseMessage();
                 resMsg.DevMsg = ex.Message;
                 resMsg.UserMsg = Resources.Server_Error;
-                resMsg.ErrorCode = MISAConst.MISAErrorException;
+                resMsg.ErrorCode = MISAConst.ErrorException;
                 return StatusCode(500, resMsg);
             }
         }
@@ -93,7 +93,7 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
-                var resMsg = _baseServices.AddNewEntity(entity);
+                var resMsg = _baseServices.Add(entity);
                 if (resMsg.Success)
                     return Ok(resMsg);
                 else return StatusCode(400, resMsg);
@@ -103,7 +103,7 @@ namespace MISA.CukCuk.Api.Controllers
                 ResponseMessage resMsg = new ResponseMessage();
                 resMsg.DevMsg = ex.Message;
                 resMsg.UserMsg = Resources.Server_Error;
-                resMsg.ErrorCode = MISAConst.MISAErrorException;
+                resMsg.ErrorCode = MISAConst.ErrorException;
                 return StatusCode(500, resMsg);
             }
         }
@@ -130,7 +130,7 @@ namespace MISA.CukCuk.Api.Controllers
                 ResponseMessage resMsg = new ResponseMessage();
                 resMsg.DevMsg = ex.Message;
                 resMsg.UserMsg = Resources.Server_Error;
-                resMsg.ErrorCode = MISAConst.MISAErrorException;
+                resMsg.ErrorCode = MISAConst.ErrorException;
                 return StatusCode(500, resMsg);
             }
         }
@@ -147,7 +147,7 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
-                var resMsg = _baseServices.UpdateEntity(entity);
+                var resMsg = _baseServices.Update(entity);
                 if (resMsg.Success)
                     return Ok(resMsg);
                 else return StatusCode(400, resMsg);
@@ -157,7 +157,7 @@ namespace MISA.CukCuk.Api.Controllers
                 ResponseMessage resMsg = new ResponseMessage();
                 resMsg.DevMsg = ex.Message;
                 resMsg.UserMsg = Resources.Server_Error;
-                resMsg.ErrorCode = MISAConst.MISAErrorException;
+                resMsg.ErrorCode = MISAConst.ErrorException;
                 return StatusCode(500, resMsg);
             }
         }

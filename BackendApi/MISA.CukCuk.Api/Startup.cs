@@ -8,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MISA.CukCuk.Business.Interfaces;
-using MISA.CukCuk.Business.Services;
-using MISA.CukCuk.DataAccess;
+using MISA.CukCuk.Core.Interfaces;
+using MISA.CukCuk.Core.Services;
+using MISA.CukCuk.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,12 +33,18 @@ namespace MISA.CukCuk.Api
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
+            services.AddControllers().AddJsonOptions(jsonOptions =>
+            {
+                jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IBaseServices<>), typeof(BaseServices<>));
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeServices, EmployeeServices>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IDepartmentServices, DepartmentServices>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IPositionServices, PositionServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

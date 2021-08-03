@@ -1,10 +1,10 @@
-﻿using MISA.CukCuk.Common.Entity;
+﻿using MISA.CukCuk.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 
-namespace MISA.CukCuk.Business.Interfaces
+namespace MISA.CukCuk.Core.Interfaces
 {
     public interface IBaseServices<MISAEntity>
     {
@@ -30,12 +30,18 @@ namespace MISA.CukCuk.Business.Interfaces
         /// </summary>
         /// <param name="entity">Bản ghi cần thêm mới</param>
         /// <returns>Thông điệp trả lời chuẩn resful</returns>
-        public ResponseMessage AddNewEntity(MISAEntity entity);
+        public ResponseMessage Add(MISAEntity entity);
         /// <summary>
         /// Cập nhật bản ghi
         /// </summary>
         /// <param name="entity">Bản ghi cập nhật</param>
         /// <returns>Thông điệp trả lời chuẩn resful</returns>
-        public ResponseMessage UpdateEntity(MISAEntity entity);
+        public ResponseMessage Update(MISAEntity entity);
+        /// <summary>
+        /// Validate dữ liệu
+        /// </summary>
+        /// <param name="entity">Bản ghi cần validate</param>
+        /// <returns>Thông điệp trả lời chuẩn resful</returns>
+        public ResponseMessage Validate(MISAEntity entity);
     }
 }

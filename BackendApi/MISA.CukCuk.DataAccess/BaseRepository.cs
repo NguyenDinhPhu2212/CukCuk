@@ -7,11 +7,13 @@ using Dapper;
 using MySqlConnector;
 using System.Linq;
 using System.Reflection;
-using MISA.CukCuk.Business.Interfaces;
+using MISA.CukCuk.Core.Interfaces;
+using MISA.CukCuk.Core.Entity;
+using System.Data;
 
-namespace MISA.CukCuk.DataAccess
+namespace MISA.CukCuk.Repository
 {
-    public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity>
+    public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity> where MISAEntity:BaseEntity
     {
         #region Declare
         IConfiguration _configuration;
@@ -35,33 +37,12 @@ namespace MISA.CukCuk.DataAccess
         /// </summary>
         /// <param name="entity">Bản ghi cần thêm mới</param>
         /// <returns></returns>
-        public int AddNewEntity(MISAEntity entity)
+        public int Add(MISAEntity entity)
         {
-            //Build lệnh truy vấn dữ liệu
-            var insertPath = $"INSERT INTO {entityName} (";
-            var valuePath = "VALUE (";
-            DynamicParameters parameters = new DynamicParameters();
-            //Lấy ra các thuộc tính của entity
-            PropertyInfo[] propInfos = entity.GetType().GetProperties();
-            //Thêm vào câu lệnh truy vấn
-            for (int i = 0; i < propInfos.Length; i++)
-            {
-                var propName = propInfos[i].Name;
-                var propValue = propInfos[i].GetValue(entity, null);
-                insertPath += $"{propName}";
-                valuePath += $"@{propName}";
-                if (i != propInfos.Length - 1)
-                {
-                    insertPath += ",";
-                    valuePath += ",";
-                }
-                parameters.Add($"@{propName}", propValue);
-            }
-            insertPath += ") ";
-            valuePath += ") ";
-            var sqlCommand = insertPath + valuePath;
+            var parameters = MapingType(entity);
             //Truy vấn
-            var rowAffected = _dbConnection.Execute(sqlCommand, parameters);
+            var rowAffected = _dbConnection.Execute($"Proc_Insert{entityName}", parameters,
+                commandType: CommandType.StoredProcedure);
             return rowAffected;
         }
         #endregion
@@ -85,54 +66,72 @@ namespace MISA.CukCuk.DataAccess
         #region Lấy tất cả các bản ghi trong database
         public List<MISAEntity> GetAll()
         {
-            //Tạo câu truy vấn
-            var sqlCommand = $"SELECT * FROM {entityName}";
             //Thực hiện truy vấn
-            var entities = _dbConnection.Query<MISAEntity>(sqlCommand).ToList();
+            var entities = _dbConnection.Query<MISAEntity>($"Proc_Get{entityName}s", 
+                commandType: CommandType.StoredProcedure).ToList();
             return entities;
         }
         #endregion
         #region Lấy bản ghi theo khóa chính
         public MISAEntity GetById(Guid entityId)
         {
-            //Tạo câu truy vấn
-            var sqlCommand = $"SELECT * FROM {entityName} WHERE {entityName}Id = @{entityName}Id";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add($"@{entityName}Id", entityId);
+            parameters.Add($"@{entityName}Id", entityId.ToString());
             //Thực hiện truy vấn
-            var entity = _dbConnection.QueryFirstOrDefault<MISAEntity>(sqlCommand,parameters);
+            var entity = _dbConnection.QueryFirstOrDefault<MISAEntity>($"Proc_Get{entityName}ById", parameters, 
+                         commandType: CommandType.StoredProcedure);
             return entity;
         }
         #endregion
         #region Cập nhật bản ghi
-        public int UpdateEntity(MISAEntity entity)
+        public int Update(MISAEntity entity)
         {
-            //Build lệnh truy vấn dữ liệu
-            var updatePath = $"UPDATE {entityName} ";
-            var valuePath = "SET ";
-            DynamicParameters parameters = new DynamicParameters();
-            //Lấy ra các thuộc tính của entity
-            PropertyInfo[] propInfos = entity.GetType().GetProperties();
-            //Thêm vào câu lệnh truy vấn
-            for (int i = 0; i < propInfos.Length; i++)
+            var parameters = MapingType(entity);
+            //Truy vấn
+            var rowAffected = _dbConnection.Execute($"Proc_Update{entityName}", parameters, 
+                commandType: CommandType.StoredProcedure);
+            return rowAffected;
+        }
+        #endregion
+        #region Kiểm tra trùng lặp mã code
+        public bool CheckDuplicate(PropertyInfo prop, MISAEntity entity)
+        {
+            var propName = prop.Name;
+            var propValue = prop.GetValue(entity).ToString();
+            if (entity.EntityState == Core.Enum.EntityState.Add)
             {
-                var propName = propInfos[i].Name;
-                var propValue = propInfos[i].GetValue(entity, null);
-                if (propName != $"{entityName}Id")
+                //Khai báo lệnh truy vấn dữ liệu
+                var sqlCommand = $"SELECT * FROM {entityName} WHERE {propName} = '{propValue}'";
+                //Truy vấn
+                var response = _dbConnection.QueryFirstOrDefault<MISAEntity>(sqlCommand);
+                if (response != null)
                 {
-                    valuePath += $"{propName} = @{propName}";
-                    if (i != propInfos.Length - 1)
-                    {
-                        valuePath += ",";
-                    }
-                    parameters.Add($"@{propName}", propValue);
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        #endregion
+        #region Maping Type
+        public DynamicParameters MapingType(MISAEntity entity)
+        {
+            var properties = entity.GetType().GetProperties();
+            var paramerters = new DynamicParameters();
+            foreach (var prop in properties)
+            {
+                var propName = prop.Name;
+                var propValue = prop.GetValue(entity);
+                var propType = prop.PropertyType;
+                if(propType == typeof(Guid) || propType == typeof(Guid?))
+                {
+                    paramerters.Add($"@{propName}", propValue, DbType.String);
+                }else
+                {
+                    paramerters.Add($"@{propName}", propValue);
                 }
             }
-            valuePath += $" WHERE {entityName}Id = @{entityName}Id";
-            var sqlCommand = updatePath + valuePath;
-            //Truy vấn
-            var rowAffected = _dbConnection.Execute(sqlCommand, parameters);
-            return rowAffected;
+            return paramerters;
         }
         #endregion
     }

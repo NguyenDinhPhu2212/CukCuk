@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
-namespace MISA.CukCuk.Business.Interfaces
+namespace MISA.CukCuk.Core.Interfaces
 {
     public interface IBaseRepository<MISAEntity>
     {
@@ -28,12 +29,19 @@ namespace MISA.CukCuk.Business.Interfaces
         /// </summary>
         /// <param name="entity">Bản ghi cần thêm</param>
         /// <returns>Số cột ảnh hưởng</returns>
-        public int AddNewEntity(MISAEntity entity);
+        public int Add(MISAEntity entity);
         /// <summary>
         /// Cập nhật bản ghi
         /// </summary>
         /// <param name="entity">Bản ghi cần cập nhật</param>
         /// <returns></returns>
-        public int UpdateEntity(MISAEntity entity);
+        public int Update(MISAEntity entity);
+        /// <summary>
+        /// Kiểm tra trùng lặp trong database
+        /// </summary>
+        /// <param name="prop">Property cần kiểm tra</param>
+        /// <param name="entity">Bản ghi cần kiểm tra</param>
+        /// <returns>true-nếu đã tồn tại, ngược lại là false</returns>
+        public bool CheckDuplicate(PropertyInfo prop, MISAEntity entity);
     }
 }

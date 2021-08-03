@@ -28,14 +28,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj"
+              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj"
               },
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj"
+              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj"
               }
             }
           }
@@ -85,66 +82,12 @@
         }
       }
     },
-    "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj",
-        "projectName": "MISA.CukCuk.Common",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj",
-        "projectName": "MISA.CukCuk.DataAccess",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj",
+        "projectName": "MISA.CukCuk.Repository",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
@@ -163,11 +106,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj"
+              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj"
               }
             }
           }
@@ -214,12 +154,12 @@
         }
       }
     },
-    "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj",
-        "projectName": "MISA.CukCuk.Business",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Business.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj",
+        "projectName": "MISA.CukCuk.Core",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\MISA.CukCuk.Core.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA_CukCuk_Business\\obj\\",
         "projectStyle": "PackageReference",
@@ -237,11 +177,7 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {
-              "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -253,6 +189,16 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.90, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[1.3.11, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

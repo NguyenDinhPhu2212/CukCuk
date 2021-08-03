@@ -13,9 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MISA.CukCuk.Common\MISA.CukCuk.Common.csproj" />
-    <ProjectReference Include="..\MISA.CukCuk.DataAccess\MISA.CukCuk.DataAccess.csproj" />
-    <ProjectReference Include="..\MISA_CukCuk_Business\MISA.CukCuk.Business.csproj" />
+    <ProjectReference Include="..\MISA.CukCuk.DataAccess\MISA.CukCuk.Repository.csproj" />
+    <ProjectReference Include="..\MISA_CukCuk_Business\MISA.CukCuk.Core.csproj" />
   </ItemGroup>
 
 </Project>

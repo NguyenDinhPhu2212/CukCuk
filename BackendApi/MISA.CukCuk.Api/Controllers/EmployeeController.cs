@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MISA.CukCuk.Business.Interfaces;
-using MISA.CukCuk.Common.Entity;
+using MISA.CukCuk.Core.Interfaces;
+using MISA.CukCuk.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

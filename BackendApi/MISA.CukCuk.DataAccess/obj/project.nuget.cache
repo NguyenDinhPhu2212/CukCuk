@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aQRHmyyv943x7POYPsFZec2VgHMNpKLLCArha9207P8V5UbNJJ8qd8MVG5LLrAdbAxtgvovHinPOHues4QqOqQ==",
+  "dgSpecHash": "BGUfcfXe1kSZTMDxPkx2ZMG1M7uRkMz+iSmFVpJWUDdSpFifXwjN1GuoPwiW5JFVvBroeVUhdql3+fCXzMP/Wg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\MISA_CukCuk\\MISA.CukCuk.DataAccess\\MISA.CukCuk.Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
